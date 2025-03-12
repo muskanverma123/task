@@ -30,4 +30,4 @@ app.listen(port,()=>{
 //     console.log("server is running on port 9000")
 // })
 
-// export default server;
+export default app;
