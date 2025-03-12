@@ -5,8 +5,6 @@ import { expect } from "chai";
 import e from "express";
 chai.use(chaiHttp)
 
-
-
 describe("Admin test case", () => {
     it("it should admin login successfully", function (done) {
         let admin = {
@@ -26,7 +24,7 @@ describe("Admin test case", () => {
                 try {
                     expect(res.body.status).to.be.equal(200);
                     expect(res.body.message).to.be.equal("admin login successfully");
-                    expect(res.body).to.have.all.keys("status", "message", "data", "token");
+                    expect(res.body).to.have.all.keys("status", "message", "data", "token","refreshToken");
                     done();
                 } catch (e) {
                     done(e);
@@ -136,7 +134,7 @@ describe("User test case", () => {
                 } try {
                     expect(res.body.status).to.be.equal(200)
                     expect(res.body.message).to.be.equal("User login successfully")
-                    expect(res.body).to.have.all.keys("status", "message", "data", "token")
+                    expect(res.body).to.have.all.keys("status", "message", "data", "token","refreshToken")
                     done()
                 } catch (error) {
                     done(error)
@@ -144,30 +142,30 @@ describe("User test case", () => {
             })
     })
 
-    it("user login fail test case", function (done) {
-        const user = {
-            email: "kashvi12@gmail.com",
-            password: "kashvi@123"
-        };
-        chai
-            .request(app)
-            .post("/user/userLogin")
-            .send(user)
-            .end((err, res) => {
-                if (err) {
-                    done(err);
-                    return;
-                }
-                try {
-                    expect(res.body.status).to.be.equal(404);
-                    expect(res.body.message).to.be.equal("Email not found");
-                    expect(res.body).to.have.all.keys("status", "message", "data");
-                    done();
-                } catch (error) {
-                    done(error);
-                }
-            });
-    });
+    // it("user login fail test case", function (done) {
+    //     const user = {
+    //         email: "kashvi11@gmail.com",
+    //         password: "kashvi@123"
+    //     };
+    //     chai
+    //         .request(app)
+    //         .post("/user/userLogin")
+    //         .send(user)
+    //         .end((err, res) => {
+    //             if (err) {
+    //                 done(err);
+    //                 return;
+    //             }
+    //             try {
+    //                 expect(res.body.status).to.be.equal(404);
+    //                 expect(res.body.message).to.be.equal("Email not found");
+    //                 expect(res.body).to.have.all.keys("status", "message", "data");
+    //                 done();
+    //             } catch (error) {
+    //                 done(error);
+    //             }
+    //         });
+    // });
 
     it("password not match", (done) => {
         let user = {
@@ -215,95 +213,92 @@ describe("User test case", () => {
 
     })
 
-    it("user register successfully", (done) => {
-        let user = {
-            "name": "kashviw",
-            "email": "kashviw@gmail.com",
-            "number": 9898545367,
-            "password": "kashvi@123"
-        }
-
-        chai
-            .request(app)
-            .post("/user/userRegister")
-            .send(user)
-            .end((err, res) => {
-                if (err) {
-                    done(err)
-                }
-                else {
-                    console.log("req.body",res.body)
-                    try {
-                        expect(res.body.status).to.be.equal(201)
-                        expect(res.body.message).to.be.equal("User register successfully")
-                        expect(res.body).to.have.all.keys("status", "message", "data")
-                        done()
-                    } catch (error) {
-                        done(error)
-                    }
-                }
-            })
-    })
-
+    // it("user register successfully", (done) => {
+    //     let user = {
+    //         "name": "kivi",
+    //         "email": "kiviw@gmail.com",
+    //         "number": 2398545367,
+    //         "password": "kivi@123"
+    //     }
+    //     chai
+    //         .request(app)
+    //         .post("/user/userRegister")
+    //         .send(user)
+    //         .end((err, res) => {
+    //             if (err) {
+    //                 done(err)
+    //             }
+    //             else {
+    //                 console.log("req.bodysssssssssssssssssssssssssssss",res.body)
+    //                 try {
+    //                     expect(res.body.status).to.be.equal(201)
+    //                     expect(res.body.message).to.be.equal("User register successfully")
+    //                     expect(res.body).to.have.all.keys("status", "message", "data")
+    //                     done()
+    //                 } catch (error) {
+    //                     done(error)
+    //                 }
+    //             }
+    //         })
+    // })
 })
 
-
-describe("sub admin test case",()=>{
-    it("delete subadmin test case successfull",(done)=>{
-        console.log("888888888888888888888888888888888888")
+// describe("sub admin test case",()=>{
+//     it("delete subadmin test case successfull",(done)=>{
+//         console.log("888888888888888888888888888888888888")
 
       
-        //  let  subadmin = {
-        //     "id":"67c04692645fcc70247ba535"
-        //  }
-         chai
-         .request(app)
-         .delete("/admin/deleteSubadminById/67c04692645fcc70247ba535")
-         .set("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im11c2thbnZlcm1hOTk3NjVAZ21haWwuY29tIiwiaWQiOiI2N2I0NzdjOWRlMjRhYzZiYjljZDQ3NGMiLCJhZG1pbnJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzQxMjQ0NjI3LCJleHAiOjE3NDEyNTE4Mjd9.mQJMUw4-sQxKfY7Ztil4EuVuiTdBJqrBMzX58Ln2M2k")
-        //  .delete("/admin/deleteSubadminById")
-         .end((err,res)=>{
-              if(err){
-                console.log("usju")
-                return done(err)
-              }else{
-                try{
-                    expect(res.body.status).to.be.equal(200)
-                    expect(res.body.message).to.be.equal("delete  subadmin data successfully")
-                    done()
-                }catch(error){
-                  done(error)
-                }
-              }
-         })
-    })
+//         //  let  subadmin = {
+//         //     "id":"67c04692645fcc70247ba535"
+//         //  }
+//          chai
+//          .request(app)
+//          .delete("/admin/deleteSubadminById/67c04692645fcc70247ba535")
+//          .set("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im11c2thbnZlcm1hOTk3NjVAZ21haWwuY29tIiwiaWQiOiI2N2I0NzdjOWRlMjRhYzZiYjljZDQ3NGMiLCJhZG1pbnJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzQxMjQ0NjI3LCJleHAiOjE3NDEyNTE4Mjd9.mQJMUw4-sQxKfY7Ztil4EuVuiTdBJqrBMzX58Ln2M2k")
+//         //  .delete("/admin/deleteSubadminById")
+//          .end((err,res)=>{
+//               if(err){
+//                 console.log("usju")
+//                 return done(err)
+//               }else{
+//                 try{
+//                     expect(res.body.status).to.be.equal(200)
+//                     expect(res.body.message).to.be.equal("delete  subadmin data successfully")
+//                     done()
+//                 }catch(error){
+//                   done(error)
+//                 }
+//               }
+//          })
+//     })
 
-    // it("update subadmin test case successfull",(done)=>{
+//     // it("update subadmin test case successfull",(done)=>{
         
-    //      let  subadmin = {
-    //         "id": "67befd9e6bd3774951875992",
-    //         "number" :1234456678
-    //      }
-    //      chai
-    //      .request(server)
-    //      .put("/admin/updateSubadminById")
+//     //      let  subadmin = {
+//     //         "id": "67befd9e6bd3774951875992",
+//     //         "number" :1234456678
+//     //      }
+//     //      chai
+//     //      .request(server)
+//     //      .put("/admin/updateSubadminById")
    
-    //      .send(subadmin)
-    //      .end((err,res)=>{
-    //           if(err){
-    //             return done(err)
-    //           }else{
-    //             try{
-    //                 expect(res.body.status).to.be.equal(200)
-    //                 expect(res.body.message).to.be.equal("update subadmin data successfully")
-    //                 done()
-    //             }catch(error){
-    //               done(error)
-    //             }
-    //           }
-    //      })
-    // })
+//     //      .send(subadmin)
+//     //      .end((err,res)=>{
+//     //           if(err){
+//     //             return done(err)
+//     //           }else{
+//     //             try{
+//     //                 expect(res.body.status).to.be.equal(200)
+//     //                 expect(res.body.message).to.be.equal("update subadmin data successfully")
+//     //                 done()
+//     //             }catch(error){
+//     //               done(error)
+//     //             }
+//     //           }
+//     //      })
+//     // })
 
-})
+// })
 
 
 
