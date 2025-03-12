@@ -10,17 +10,24 @@ import dotenv, { config } from "dotenv"
 dotenv.config()
 app.use(express.json())
 const port = process.env.PORT
-app.get('/',(req,res)=>{
-  res.send("hell from server")
-})
+
+connectDb()
+
 app.use("/user",userRouter)
 app.use("/task",taskRouter)
 app.use("/admin",adminRouter)
 app.use("/project",projectRouter)
 
-let server = app.listen(port,()=>{
-    connectDb()
-    console.log("server is running on port 9000")
+app.get('/',(req,res)=>{
+  res.send("hello from server testing")
 })
 
-export default server;
+app.listen(port,()=>{
+  console.log("app listen on 9000")
+})
+// let server = app.listen(port,()=>{
+//     connectDb()
+//     console.log("server is running on port 9000")
+// })
+
+// export default server;
