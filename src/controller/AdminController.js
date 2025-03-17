@@ -31,19 +31,15 @@ export const AdminLogin = async (req, res) => {
                 id: checkAdmin._id,
                 adminrole: checkAdmin.adminrole
             }
-              console.log(payload, "PPPPPPPPPPPPPP")
-            console.log( process.env.REFRESH_TOKEN_KEY,"RRRRRRRRRRRRRRRRRRRRRRRR")
-          
-            // console.log(process.env.SECRECT_KEY, "SSSSSSSSSSSSS")
             const token = jwt.sign(payload, process.env.SECRECT_KEY, { expiresIn: "2m" })
 
-            const RefreshToken = jwt.sign(payload,process.env.REFRESH_TOKEN_KEY,{expiresIn:"30d"})           
+            const refreshToken = jwt.sign(payload,process.env.REFRESH_TOKEN_KEY,{expiresIn:"30d"})           
             res.status(200).json({
                 status: 200,
                 message: "admin login successfully",
                 data: checkAdmin,
                 token: token,
-                RefreshToken:RefreshToken
+                refreshToken:refreshToken
             })
         } else {
             res.status(401).json({
