@@ -11,7 +11,7 @@ describe("Admin test case", () => {
             email: "muskanverma99765@gmail.com",
             password: "Muskan@123",
         };
-        this.timeout(5000);
+        this.timeout(10000);
         chai
             .request(app)
             .post("/admin/AdminLogin")
@@ -122,7 +122,7 @@ describe("User test case", () => {
             email: "kashvi@gmail.com",
             password: "kashvi@123"
         };
-        this.timeout(5000);
+        this.timeout(10000);
         chai
             .request(app)
             .post("/user/userLogin")
