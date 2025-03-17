@@ -43,4 +43,4 @@ jobs:
     - run: npm ci
       env:
           MONGO_URL: ${{ secrets.MONGO_URL }}
-    - run: npm test --prod --token $MONGO_URL --yes
+    - run: npm test --token $MONGO_URL
