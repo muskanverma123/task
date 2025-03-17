@@ -1,6 +1,6 @@
 import express from "express"
 const app  = express()
-// import connectDb from "./src/config/ConfigDb.js"
+import connectDb from "./src/config/ConfigDb.js"
 import userRouter from "./src/routes/UserRoute.js"
 import taskRouter from "./src/routes/TaskRoute.js"
 import projectRouter from "./src/routes/ProjectRoute.js"
@@ -11,7 +11,7 @@ dotenv.config()
 app.use(express.json())
 const port = process.env.PORT
 
-// connectDb()
+connectDb()
 
 app.use("/user",userRouter)
 app.use("/task",taskRouter)
